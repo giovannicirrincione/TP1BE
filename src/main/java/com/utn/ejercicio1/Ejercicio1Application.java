@@ -104,7 +104,7 @@ public class Ejercicio1Application {
 							.Numero(2226)
 							.build();
 					Domicilio domicilio1 = Domicilio.builder()
-							.calle("Vienda")
+							.calle("Viedma")
 							.localidad("Lujan de cuyo")
 							.Numero(313)
 							.build();
@@ -118,8 +118,14 @@ public class Ejercicio1Application {
 							.localidad("vistalba")
 							.Numero(200)
 							.build();
+					Domicilio domicilio4 = Domicilio.builder()
+							.calle("Giñazu")
+							.localidad("Lujan de cuyo")
+							.Numero(1026)
+							.build();
 
 							cliente.agregardomicilios(domicilio);//Agregar el domicilio a las personas, cuando guardas a una persona la guardas con su domicilio
+							cliente1.agregardomicilios(domicilio4);
 							cliente1.agregardomicilios(domicilio1);
 							cliente2.agregardomicilios(domicilio2);
 							cliente3.agregardomicilios(domicilio3);
@@ -185,6 +191,14 @@ public class Ejercicio1Application {
 			if (rubrorecuperado!=null){
 				System.out.println("HOLA");
 			}
+			Cliente clienteRecuperado = clienteRepository.findById(cliente1.getId()).orElse(null);
+			if (clienteRecuperado!=null){
+				System.out.println("Nombre: "+clienteRecuperado.getNombre());
+				System.out.println("Apellido: "+clienteRecuperado.getApellido());
+				System.out.println("Edad: "+clienteRecuperado.getEdad());
+				clienteRecuperado.mostrardomicilios();
+			}
+
 
 		};
 

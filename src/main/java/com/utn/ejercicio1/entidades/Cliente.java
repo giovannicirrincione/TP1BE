@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.query.JSqlParserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,5 +36,12 @@ public class Cliente extends BaseEntidad {
     @Builder.Default
     private List<Pedido> pedidos = new ArrayList<>();
     public void generarpedidos(Pedido pedi){pedidos.add(pedi);}
+
+    public void mostrardomicilios(){
+        System.out.println("Domicilios de " +nombre+ " "+ apellido+":");
+        for(Domicilio  domicilio : domicilios){
+            System.out.println("Calle: "+ domicilio.getCalle() +" "+ "Numero"+" " + domicilio.getNumero() +" "+  "Localidad"+" " + domicilio.getLocalidad());
+        }
+    }
 
 }
