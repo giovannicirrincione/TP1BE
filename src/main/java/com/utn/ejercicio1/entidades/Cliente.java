@@ -34,5 +34,6 @@ public class Cliente extends BaseEntidad {
     @JoinColumn(name="cliente_id")
     @Builder.Default
     private List<Pedido> pedidos = new ArrayList<>();
+    public void generarpedidos(Pedido pedi){pedidos.add(pedi);}
 
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Builder
 public class Pedido extends BaseEntidad {
     private String Estado;
-    private Date fecha;
+    private LocalDateTime fecha;
     private String tipoEnvio;
     private Double total;
 
@@ -26,6 +27,27 @@ public class Pedido extends BaseEntidad {
     @Builder.Default
 
     private List <DetallePedido> detalles = new ArrayList<>();
-    @OneToOne(mappedBy = "esDe")
-    private DetallePedido detallePedido;
+    //@ManyToOne()
+    //private DetallePedido detallePedido;
+    @ManyToOne()
+    @JoinColumn(name="Cliente_id")
+    private Cliente loPidio;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = true)
+    private Factura factura;
+
+    public void generarDetalles(DetallePedido detalle){
+        detalles.add(detalle);
+
+    }
+    public Double calcularTotal() {
+
+        double Total = (double) 0;
+        for (int i = 0; i < detalles.size(); i++) {
+
+            DetallePedido detalle = detalles.get(i);
+            Total = Total + detalle.getSubtotal();
+        }
+        return Total;
+    }
 }

@@ -1,8 +1,5 @@
 package com.utn.ejercicio1.entidades;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +13,14 @@ import lombok.NoArgsConstructor;
 public class DetallePedido extends BaseEntidad{
     private int cantidad;
     private double subtotal;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="pedido_id")
+    @ManyToOne()
+    @JoinColumn(name="Producto_id")
+   private Producto esDeUn;
+    public void asginarPedido(Producto prod){
+        this.esDeUn = prod;
+    }
 
-    private Pedido esDe;
+    public Double calcularSubtotal() {
+        return this.cantidad * esDeUn.getPrecioCompra();
+    }
 }

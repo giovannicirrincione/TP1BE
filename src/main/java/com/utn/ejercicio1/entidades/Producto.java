@@ -23,12 +23,14 @@ public class Producto extends BaseEntidad{
     private int stockMinimo;
     private String unidadMedida;
     private String receta;
-
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     @JoinColumn(name="producto_id")
     @Builder.Default
 
     private List<DetallePedido> productos = new ArrayList<>();
+    @ManyToOne()
+    @JoinColumn(name="rubro_id")
+    private Rubro rubro;
 }
 
 
