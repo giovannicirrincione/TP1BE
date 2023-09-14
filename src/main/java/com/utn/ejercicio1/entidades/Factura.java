@@ -20,10 +20,10 @@ public class Factura extends BaseEntidad{
     private Double descuento;
     private String formapago;
     private int total;
-    @OneToOne(mappedBy = "factura")
-    private Pedido pedido;
+    //@OneToOne(mappedBy = "factura")
+    //private Pedido pedido;
 
-    public int calcularMontoTotal(){
-        return (int) (pedido.getTotal()-(pedido.getTotal()*this.descuento*0.01));
-    }
+    //public int calcularMontoTotal(){
+      //  return (int) (pedido.getTotal()-(pedido.getTotal()*this.descuento*0.01));
+    //}
 }

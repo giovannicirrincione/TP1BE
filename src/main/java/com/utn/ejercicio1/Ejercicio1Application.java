@@ -25,11 +25,12 @@ public class Ejercicio1Application {
 	@Autowired
 	DetallePedidoRepository detallePedidoRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(Ejercicio1Application.class, args);
+		public static void main(String[] args) {
+			SpringApplication.run(Ejercicio1Application.class, args);
+
+		}
 
 
-	}
 	@Bean
 	CommandLineRunner init(RubroRepository rubroRepository, ProductoRepository productoRepository, ClienteRepository clienteRepository, PedidoRepository pedidoRepository) {
 		return args -> {
@@ -73,15 +74,13 @@ public class Ejercicio1Application {
 			bebidas.agregarproductos(Cocacola);
 			bebidas.agregarproductos(Sprite);
 			bebidas.agregarproductos(Fanta);
-			Cocacola.setRubro(bebidas);
-			Fanta.setRubro(bebidas);
-			Sprite.setRubro(bebidas);
+
 			rubroRepository.save(bebidas);
 
 					Cliente cliente1 = Cliente.builder()
 							.nombre("Giovanni")
 							.apellido("Cirrincione")
-							.edad(2)
+							.edad(20)
 							.build();
 					Cliente cliente2 = Cliente.builder()
 							.nombre("Ignacio")
@@ -98,6 +97,7 @@ public class Ejercicio1Application {
 							.apellido("donnarumma")
 							.edad(21)
 							.build();
+
 					Domicilio domicilio = Domicilio.builder()
 							.calle("LosPeralitos")
 							.localidad("Lujan de cuyo")
@@ -123,63 +123,59 @@ public class Ejercicio1Application {
 							.localidad("Lujan de cuyo")
 							.Numero(1026)
 							.build();
+			Pedido pedido = Pedido.builder()
+					.Estado("Iniciado")
+					.fecha(LocalDateTime.now())
+					.tipoEnvio("delivery")
+
+					.build();
+
+
+			DetallePedido detalle = DetallePedido.builder()
+					.cantidad(5)
+
+					.build();
+			detalle.setEsDeUn(Fanta);
+			detalle.setSubtotal(detalle.calcularSubtotal());//calcular el subtotal del detalle
+
+			DetallePedido detalle1 = DetallePedido.builder()
+					.cantidad(3)
+
+					.build();
+			detalle1.setEsDeUn(Cocacola);
+			detalle1.setSubtotal(detalle1.calcularSubtotal());
+			//detallePedidoRepository.save(detalle);
+			//detallePedidoRepository.save(detalle1);
+
+
+
+			pedido.generarDetalles(detalle1);
+			pedido.generarDetalles(detalle);
+			//pedido.setLoPidio(cliente);
+			pedido.setTotal(pedido.calcularTotal());
+			Factura factura = Factura.builder()
+					.numero(1)
+					.descuento(10.0)
+					.fecha(LocalDateTime.now())
+					.formapago("Efectivo")
+
+					.build();
+			pedido.setFactura(factura);
+			//factura.setPedido(pedido);
+			//factura.setTotal(factura.calcularMontoTotal());
+			cliente.generarpedidos(pedido);
 
 							cliente.agregardomicilios(domicilio);//Agregar el domicilio a las personas, cuando guardas a una persona la guardas con su domicilio
 							cliente1.agregardomicilios(domicilio4);
 							cliente1.agregardomicilios(domicilio1);
 							cliente2.agregardomicilios(domicilio2);
 							cliente3.agregardomicilios(domicilio3);
-
+							cliente.generarpedidos(pedido);
 							clienteRepository.save(cliente);//guardar los clientes
 
 							clienteRepository.save(cliente1);
 							clienteRepository.save(cliente2);
 							clienteRepository.save(cliente3);
-
-
-
-					Pedido pedido = Pedido.builder()
-							.Estado("Iniciado")
-							.fecha(LocalDateTime.now())
-							.tipoEnvio("delivery")
-
-							.build();
-
-					DetallePedido detalle = DetallePedido.builder()
-							.cantidad(5)
-
-							.build();
-							detalle.setEsDeUn(Fanta);
-							detalle.setSubtotal(detalle.calcularSubtotal());//calcular el subtotal del detalle
-
-					DetallePedido detalle1 = DetallePedido.builder()
-							.cantidad(3)
-
-							.build();
-							detalle1.setEsDeUn(Cocacola);
-							detalle1.setSubtotal(detalle1.calcularSubtotal());
-					//detallePedidoRepository.save(detalle);
-					//detallePedidoRepository.save(detalle1);
-
-
-
-					pedido.generarDetalles(detalle1);
-					pedido.generarDetalles(detalle);
-					pedido.setLoPidio(cliente);
-					pedido.setTotal(pedido.calcularTotal());
-					Factura factura = Factura.builder()
-							.numero(1)
-							.descuento(10.0)
-							.fecha(LocalDateTime.now())
-							.formapago("Efectivo")
-
-							.build();
-					pedido.setFactura(factura);
-					factura.setPedido(pedido);
-					factura.setTotal(factura.calcularMontoTotal());
-					pedidoRepository.save(pedido);//y luego se van creando los pedidos y se les asignan a un cliente
-
-
 
 
 
@@ -191,7 +187,7 @@ public class Ejercicio1Application {
 			if (rubrorecuperado!=null){
 				System.out.println("HOLA");
 			}
-			Cliente clienteRecuperado = clienteRepository.findById(cliente1.getId()).orElse(null);
+			Cliente clienteRecuperado = clienteRepository.findById(cliente.getId()).orElse(null);
 			if (clienteRecuperado!=null){
 				System.out.println("Nombre: "+clienteRecuperado.getNombre());
 				System.out.println("Apellido: "+clienteRecuperado.getApellido());
@@ -206,4 +202,5 @@ public class Ejercicio1Application {
 	}
 
 }
+
 

@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class Rubro extends BaseEntidad{
     private String denominacion;
-    @OneToMany(mappedBy = "rubro",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     @Builder.Default
 
     private List<Producto> productos = new ArrayList<>();

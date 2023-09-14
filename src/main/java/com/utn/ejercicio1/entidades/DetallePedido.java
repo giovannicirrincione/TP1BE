@@ -15,7 +15,7 @@ public class DetallePedido extends BaseEntidad{
     private double subtotal;
     @ManyToOne()
     @JoinColumn(name="Producto_id")
-   private Producto esDeUn;
+    private Producto esDeUn;
     public void asginarPedido(Producto prod){
         this.esDeUn = prod;
     }

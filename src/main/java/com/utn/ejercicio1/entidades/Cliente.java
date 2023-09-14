@@ -1,5 +1,6 @@
 package com.utn.ejercicio1.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,9 +32,10 @@ public class Cliente extends BaseEntidad {
         domicilios.add(domi);
     }
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     @JoinColumn(name="cliente_id")
     @Builder.Default
+
     private List<Pedido> pedidos = new ArrayList<>();
     public void generarpedidos(Pedido pedi){pedidos.add(pedi);}
 
