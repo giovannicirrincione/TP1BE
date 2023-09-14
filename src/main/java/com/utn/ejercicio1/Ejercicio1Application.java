@@ -144,8 +144,8 @@ public class Ejercicio1Application {
 					.build();
 			detalle1.setEsDeUn(Cocacola);
 			detalle1.setSubtotal(detalle1.calcularSubtotal());
-			//detallePedidoRepository.save(detalle);
-			//detallePedidoRepository.save(detalle1);
+			detallePedidoRepository.save(detalle);
+			detallePedidoRepository.save(detalle1);
 
 
 
@@ -163,7 +163,7 @@ public class Ejercicio1Application {
 			pedido.setFactura(factura);
 			//factura.setPedido(pedido);
 			//factura.setTotal(factura.calcularMontoTotal());
-			cliente.generarpedidos(pedido);
+			//cliente.generarpedidos(pedido);
 
 							cliente.agregardomicilios(domicilio);//Agregar el domicilio a las personas, cuando guardas a una persona la guardas con su domicilio
 							cliente1.agregardomicilios(domicilio4);
